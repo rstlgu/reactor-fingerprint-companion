@@ -25,12 +25,6 @@ function t(key) {
   return translations[currentLang]?.[key] || translations['en'][key] || key;
 }
 
-// Truncate address in the middle: bc1qgt2...678703l
-function truncateAddress(address, startChars = 8, endChars = 8) {
-  if (!address || address.length <= startChars + endChars + 3) return address;
-  return `${address.slice(0, startChars)}...${address.slice(-endChars)}`;
-}
-
 function applyLanguage(lang) {
   currentLang = lang;
   document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -106,8 +100,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // Show cluster info
     clusterInfo.style.display = 'block';
-    document.getElementById('cluster-address').textContent = truncateAddress(cluster, 8, 8) || 'Unknown cluster';
-    document.getElementById('cluster-address').title = cluster; // Full address on hover
+    document.getElementById('cluster-address').textContent = cluster || 'Unknown cluster';
     document.getElementById('tx-count').textContent = results.transactions.length;
     document.getElementById('wallet-count').textContent = Object.keys(results.wallets).length;
     document.getElementById('error-count').textContent = results.errors.length;
