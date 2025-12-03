@@ -70,7 +70,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       saveData[`analysis_${request.data.cluster}`] = request.data;
     }
     chrome.storage.local.set(saveData).catch(err => {
-      console.error('[Fingerprint Companion] Error saving analysis to storage:', err);
+      console.error('[Reactor Fingerprint Companion] Error saving analysis to storage:', err);
     });
     sendResponse({ success: true });
   }

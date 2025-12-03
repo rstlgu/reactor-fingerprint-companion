@@ -1,4 +1,4 @@
-// Documentation page script for Fingerprint Companion
+// Documentation page script for Reactor Fingerprint Companion
 let currentLang = 'en';
 
 function t(key) {

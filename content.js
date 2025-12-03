@@ -3,7 +3,7 @@
 (function() {
   'use strict';
   
-  console.log('[Fingerprint Companion] Content script loading...');
+  console.log('[Reactor Fingerprint Companion] Content script loading...');
   
   // i18n translations (inline for content script)
   const i18n = {
@@ -108,12 +108,12 @@
     script.type = 'text/javascript';
     
     script.onload = function() {
-      console.log('[Fingerprint Companion] ✅ Script injected into main world');
+      console.log('[Reactor Fingerprint Companion] ✅ Script injected into main world');
       this.remove();
     };
     
     script.onerror = function(e) {
-      console.error('[Fingerprint Companion] ❌ Script injection error:', e);
+      console.error('[Reactor Fingerprint Companion] ❌ Script injection error:', e);
     };
     
     const target = document.head || document.documentElement;
@@ -145,7 +145,7 @@
       const transfers = event.data.data;
       const newWalletAddress = event.data.walletAddress;
       
-      console.log('[Fingerprint Companion] 📨 Received outgoing transactions:', transfers.length);
+      console.log('[Reactor Fingerprint Companion] 📨 Received outgoing transactions:', transfers.length);
       
       // If new wallet, reset and check for cached analysis
       if (newWalletAddress !== walletAddress) {
@@ -163,7 +163,7 @@
           });
           
           if (cachedAnalysis && cachedAnalysis.results) {
-            console.log('[Fingerprint Companion] ♻️ Found cached analysis for this cluster');
+            console.log('[Reactor Fingerprint Companion] ♻️ Found cached analysis for this cluster');
             cachedResults = cachedAnalysis.results;
             
             // Extract dominant wallet
@@ -173,7 +173,7 @@
             }
           }
         } catch (err) {
-          console.error('[Fingerprint Companion] Error checking cached analysis:', err);
+          console.error('[Reactor Fingerprint Companion] Error checking cached analysis:', err);
         }
       }
       
@@ -184,27 +184,27 @@
         type: 'CHAINALYSIS_RESPONSE',
         data: transfers
       }).catch(err => {
-        console.error('[Fingerprint Companion] Error sending to background:', err);
+        console.error('[Reactor Fingerprint Companion] Error sending to background:', err);
       });
       
       // Auto-analyze immediately if <= threshold AND no cached results
       if (transactionCount > 0 && transactionCount <= AUTO_ANALYZE_THRESHOLD && !isAnalyzing && !cachedResults) {
-        console.log('[Fingerprint Companion] 🚀 Starting auto-analysis for', transactionCount, 'transactions');
+        console.log('[Reactor Fingerprint Companion] 🚀 Starting auto-analysis for', transactionCount, 'transactions');
         setTimeout(() => startBackgroundAnalysis(), 500);
       } else if (cachedResults) {
-        console.log('[Fingerprint Companion] ✅ Using cached results');
+        console.log('[Reactor Fingerprint Companion] ✅ Using cached results');
+        }
       }
-    }
-  });
+    });
   
   // Background analysis (no UI changes, just updates button content)
   async function startBackgroundAnalysis() {
     if (isAnalyzing || cachedResults) {
-      console.log('[Fingerprint Companion] ⏭️ Skipping analysis - already analyzing or cached');
+      console.log('[Reactor Fingerprint Companion] ⏭️ Skipping analysis - already analyzing or cached');
       return;
     }
     
-    console.log('[Fingerprint Companion] 🔄 Starting background analysis...');
+    console.log('[Reactor Fingerprint Companion] 🔄 Starting background analysis...');
     isAnalyzing = true;
     
     // Show loading spinner on button
@@ -214,13 +214,13 @@
       const txData = await chrome.runtime.sendMessage({ type: 'GET_TRANSACTIONS' });
       
       if (!txData || !txData.hashes || !txData.hashes.length) {
-        console.log('[Fingerprint Companion] ❌ No transaction data available');
+        console.log('[Reactor Fingerprint Companion] ❌ No transaction data available');
         isAnalyzing = false;
         updateButtonContent(transactionCount, null);
         return;
       }
       
-      console.log('[Fingerprint Companion] 📊 Analyzing', txData.hashes.length, 'transactions...');
+      console.log('[Reactor Fingerprint Companion] 📊 Analyzing', txData.hashes.length, 'transactions...');
       
       const analysisResults = await chrome.runtime.sendMessage({
         type: 'ANALYZE_WALLET',
@@ -244,11 +244,11 @@
         // Use getWalletsToShow to potentially show multiple icons
         const walletsToShow = getWalletsToShow();
         updateButtonContent(transactionCount, walletsToShow);
-        console.log('[Fingerprint Companion] ✅ Analysis complete:', dominantWallet, '- Showing:', walletsToShow);
+        console.log('[Reactor Fingerprint Companion] ✅ Analysis complete:', dominantWallet, '- Showing:', walletsToShow);
       }
       
     } catch (error) {
-      console.error('[Fingerprint Companion] ❌ Background analysis error:', error);
+      console.error('[Reactor Fingerprint Companion] ❌ Background analysis error:', error);
       updateButtonContent(transactionCount, null);
     }
     
@@ -404,7 +404,7 @@
     resetResults();
     updateUI();
     
-    console.log('[Fingerprint Companion] 🧹 Data cleared');
+    console.log('[Reactor Fingerprint Companion] 🧹 Data cleared');
   }
   
   // Initialize UI
@@ -412,7 +412,7 @@
     createFloatingButton();
     createAnalysisPanel();
     addCustomStyles();
-    console.log('[Fingerprint Companion] ✅ UI initialized');
+    console.log('[Reactor Fingerprint Companion] ✅ UI initialized');
   }
   
   // Add custom styles for button content
@@ -495,7 +495,7 @@
     container.id = 'btc-fingerprint-floating';
     
     container.innerHTML = `
-      <button id="btc-fingerprint-btn" disabled title="Fingerprint Companion">
+      <button id="btc-fingerprint-btn" disabled title="Reactor Fingerprint Companion">
         <div id="btc-fp-btn-content">
           <span class="btc-fp-btn-icon">${ICONS.fingerprint}</span>
         </div>
@@ -629,8 +629,8 @@
       }
       
       const analysisResults = await chrome.runtime.sendMessage({
-        type: 'ANALYZE_WALLET',
-        hashes: txData.hashes
+          type: 'ANALYZE_WALLET',
+          hashes: txData.hashes
       });
       
       // Cache results
@@ -654,7 +654,7 @@
       displayResults(analysisResults, txData.transfers);
       
     } catch (error) {
-      console.error('[Fingerprint Companion] Error:', error);
+      console.error('[Reactor Fingerprint Companion] Error:', error);
       const status = document.getElementById('btc-fp-status');
       if (status) {
         status.classList.remove('btc-fp-loading');
@@ -725,7 +725,7 @@
           ${results.transactions.map(tx => `
             <div class="btc-fp-tx-item-detailed">
               <div class="btc-fp-tx-header">
-                <a href="https://mempool.space/tx/${tx.hash}" target="_blank" class="btc-fp-tx-hash">
+              <a href="https://mempool.space/tx/${tx.hash}" target="_blank" class="btc-fp-tx-hash">
                   ${tx.hash.substring(0, 18)}...
                 </a>
                 <span class="btc-fp-tx-wallet">${tx.wallet}</span>
@@ -830,5 +830,5 @@
     initUI();
   }
   
-  console.log('[Fingerprint Companion] ✅ Content script loaded');
+  console.log('[Reactor Fingerprint Companion] ✅ Content script loaded');
 })();

@@ -1,4 +1,4 @@
-# Fingerprint Companion (for Chainalysis) 🔍
+# Reactor Fingerprint Companion 🔍
 
 A Chrome extension that intercepts Bitcoin transactions displayed on **Chainalysis Reactor** and automatically analyzes which wallet software was used to create them.
 
@@ -21,7 +21,7 @@ A Chrome extension that intercepts Bitcoin transactions displayed on **Chainalys
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/user/chainalysis-wallet-fingerprint.git
+   git clone https://github.com/rstlgu/btc-fingerprint-companion.git
    ```
 
 2. Open your browser and navigate to:
@@ -129,8 +129,8 @@ chainalysis-wallet-fingerprint/
 
 Open developer console (F12) on Chainalysis to see logs:
 ```
-[Fingerprint Companion] 📨 Received outgoing transactions: 25
-[Fingerprint Companion] ✅ Analysis complete: Bitcoin Core
+[Reactor Fingerprint Companion] 📨 Received outgoing transactions: 25
+[Reactor Fingerprint Companion] ✅ Analysis complete: Bitcoin Core
 ```
 
 For background script debugging:

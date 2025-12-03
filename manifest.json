@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Fingerprint Companion (for Chainalysis)",
+  "name": "Reactor Fingerprint Companion",
   "version": "1.4.0",
   "description": "Analizza le transazioni Bitcoin per identificare il wallet utilizzato",
   "permissions": [

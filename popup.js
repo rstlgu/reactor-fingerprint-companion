@@ -1,4 +1,4 @@
-// Popup script for Fingerprint Companion extension
+// Popup script for Reactor Fingerprint Companion extension
 
 document.addEventListener('DOMContentLoaded', async () => {
   const themeSelect = document.getElementById('theme-select');

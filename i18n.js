@@ -1,4 +1,4 @@
-// Internationalization module for Fingerprint Companion
+// Internationalization module for Reactor Fingerprint Companion
 
 const translations = {
   en: {
@@ -50,7 +50,7 @@ const translations = {
     // Docs page
     documentation: 'Documentation',
     introduction: 'Introduction',
-    introText: '<strong>Fingerprint Companion</strong> is a Chrome extension for Chainalysis that analyzes Bitcoin transactions to identify the wallet software used to create the transaction.',
+    introText: '<strong>Reactor Fingerprint Companion</strong> is a Chrome extension for Chainalysis that analyzes Bitcoin transactions to identify the wallet software used to create the transaction.',
     introText2: 'Identification is performed by analyzing the <strong>technical characteristics</strong> of transactions, such as version, locktime, script types, output structure, and other parameters specific to each wallet implementation.',
     important: 'Important',
     importantText: 'This technique provides probabilistic indications, not absolute certainties. Some wallets may have overlapping characteristics, and different versions of the same wallet may behave differently.',
@@ -167,7 +167,7 @@ const translations = {
     // Docs page
     documentation: 'Documentazione',
     introduction: 'Introduzione',
-    introText: '<strong>Fingerprint Companion</strong> è un\'estensione Chrome per Chainalysis che analizza le transazioni Bitcoin per identificare il software wallet utilizzato per creare la transazione.',
+    introText: '<strong>Reactor Fingerprint Companion</strong> è un\'estensione Chrome per Chainalysis che analizza le transazioni Bitcoin per identificare il software wallet utilizzato per creare la transazione.',
     introText2: 'L\'identificazione avviene analizzando le <strong>caratteristiche tecniche</strong> delle transazioni, come la versione, il locktime, i tipi di script, la struttura degli output e altri parametri specifici di ogni implementazione wallet.',
     important: 'Importante',
     importantText: 'Questa tecnica fornisce indicazioni probabilistiche, non certezze assolute. Alcuni wallet possono avere caratteristiche sovrapposte, e versioni diverse dello stesso wallet possono comportarsi in modo differente.',
