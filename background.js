@@ -102,7 +102,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
   
   if (request.type === 'OPEN_FULL_ANALYSIS') {
-    chrome.tabs.create({ url: chrome.runtime.getURL('analysis.html') });
+    const url = chrome.runtime.getURL('analysis.html');
+    const fullUrl = request.cluster 
+      ? `${url}?cluster=${encodeURIComponent(request.cluster)}`
+      : url;
+    chrome.tabs.create({ url: fullUrl });
     sendResponse({ success: true });
   }
   
@@ -139,21 +143,53 @@ async function analyzeWallet(hashes) {
     try {
       // Controlla se abbiamo già questa transazione in cache
       let analysis;
+      let txData;
       if (txCache[hash]) {
-        analysis = txCache[hash];
+        analysis = txCache[hash].analysis;
+        txData = txCache[hash].txData;
         results.cached++;
       } else {
-      const txData = await fetchTransaction(hash);
+        txData = await fetchTransaction(hash);
         analysis = detectWallet(txData);
-        
         // Salva in cache
-        txCache[hash] = analysis;
+        txCache[hash] = { analysis, txData };
       }
       
+      // txData values sono già in BTC (normalizzati in fetchTransaction)
+      const normalizedVin = (txData.vin || []).map(v => ({
+        address: v.prevout?.scriptpubkey_address || null,
+        value: typeof v.prevout?.value === 'number' ? v.prevout.value : null,
+        type: v.prevout?.scriptpubkey_type || null
+      }));
+      
+      const normalizedVout = (txData.vout || []).map(v => ({
+        address: v.scriptpubkey_address || null,
+        value: v.value, // già normalizzato in fetchTransaction
+        type: v.scriptpubkey_type || null,
+        spent: v.spent || false
+      }));
+      
+      const totalInput = normalizedVin.reduce((sum, v) => sum + (v.value || 0), 0);
+      const totalOutput = normalizedVout.reduce((sum, v) => sum + (v.value || 0), 0);
+      const feeBtc = txData.fee ? txData.fee / 100000000 : 0;
+      
       results.transactions.push({
-        hash: hash,
+        hash,
         wallet: analysis.wallet,
-        reasoning: analysis.reasoning
+        reasoning: analysis.reasoning,
+        fee: feeBtc,
+        inputCount: normalizedVin.length,
+        outputCount: normalizedVout.length,
+        totalInput,
+        totalOutput,
+        vin: normalizedVin,
+        vout: normalizedVout,
+        weight: txData.weight || null,
+        vsize: txData.vsize || null,
+        locktime: txData.locktime,
+        version: txData.version,
+        blockTime: txData.status?.block_time || null,
+        confirmed: txData.status?.confirmed || false
       });
       
       // Conta i wallet
@@ -186,6 +222,11 @@ async function fetchTransaction(txid) {
   // Normalizza i valori (da satoshi a BTC)
   for (const txOut of tx.vout) {
     txOut.value = txOut.value / 100000000;
+  }
+  for (const txIn of tx.vin) {
+    if (txIn.prevout && typeof txIn.prevout.value === 'number') {
+      txIn.prevout.value = txIn.prevout.value / 100000000;
+    }
   }
   
   return tx;

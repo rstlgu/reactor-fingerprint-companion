@@ -754,7 +754,10 @@
     `;
     
     document.getElementById('btc-fp-fullpage').addEventListener('click', () => {
-      chrome.runtime.sendMessage({ type: 'OPEN_FULL_ANALYSIS' });
+      chrome.runtime.sendMessage({ 
+        type: 'OPEN_FULL_ANALYSIS',
+        cluster: walletAddress 
+      });
     });
     
     document.getElementById('btc-fp-clear-results').addEventListener('click', () => {

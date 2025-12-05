@@ -245,6 +245,11 @@
       overflow: hidden;
     }
     
+    .wallet-item-active {
+      border: 1px solid var(--accent);
+      box-shadow: 0 0 0 2px rgba(247, 147, 26, 0.18);
+    }
+    
     .wallet-name {
       font-size: 15px;
       font-weight: 500;
@@ -340,6 +345,82 @@
       gap: 6px;
     }
     
+    .tx-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    
+    .meta-badge {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 999px;
+      padding: 4px 10px;
+    }
+    
+    .tx-io {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 10px 0 12px;
+    }
+    
+    .tx-io-col {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .tx-io-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    
+    .tx-io-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    
+    .tx-io-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: var(--text-secondary);
+      gap: 8px;
+    }
+    
+    .tx-io-addr {
+      max-width: 70%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-primary);
+    }
+    
+    .tx-io-val {
+      font-weight: 700;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    
+    .tx-io-more {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    
     .feature-tag {
       padding: 4px 10px;
       background: var(--bg-secondary);
@@ -430,6 +511,24 @@
         </div>
       </div>
       <div class="header-actions">
+        <button class="btn btn-secondary" id="export-csv-btn">
+          <span class="btn-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16v12H5.17L4 17.17V4z"/>
+              <path d="M8 8h8M8 12h5"/>
+            </svg>
+          </span>
+          <span>Export CSV</span>
+        </button>
+        <button class="btn btn-secondary" id="export-html-btn">
+          <span class="btn-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16v16H4z"/>
+              <path d="M8 4v16M16 4v16M4 9h16M4 15h16"/>
+            </svg>
+          </span>
+          <span>Save HTML</span>
+        </button>
         <button class="btn btn-secondary" id="docs-btn">
           <span class="btn-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
