@@ -2,10 +2,6 @@
 
 A Chrome extension that intercepts Bitcoin transactions displayed on **Chainalysis Reactor** and automatically analyzes which wallet software was used to create them.
 
-![Fingerprints Table](images/fingerprints_final.png)
-
-## 🎥 Demo
-
 ![Extension demo](images/demo.gif)
 
 ## ✨ Features
@@ -101,7 +97,6 @@ For each transaction hash:
 | **Trezor** | nVersion=1, BIP-69, RBF |
 | **Ledger** | nVersion=1, RBF, change last |
 
-![Block Analysis](images/block_807929_graph.png)
 
 ## 📁 Project Structure
 
@@ -149,6 +144,9 @@ This extension is based on the excellent research by **Ishaana**:
 > **[Wallet Fingerprints: Detection & Analysis](https://ishaana.com/blog/wallet_fingerprinting/)**
 > 
 > Comprehensive analysis of wallet fingerprints and automated detection methodology. By implementing a few heuristics, about 50% of recent transactions can be attributed to their originating wallet.
+
+![Block Analysis](images/block_807929_graph.png)
+![Fingerprints Table](images/fingerprints_final.png)
 
 ### Additional Resources
 
