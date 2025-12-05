@@ -1,8 +1,12 @@
-# Reactor Fingerprint Companion 🔍
+# Refinger (Reactor Fingerprint Companion)
 
 A Chrome extension that intercepts Bitcoin transactions displayed on **Chainalysis Reactor** and automatically analyzes which wallet software was used to create them.
 
 ![Fingerprints Table](images/fingerprints_final.png)
+
+## 🎥 Demo
+
+![Extension demo](images/demo.gif)
 
 ## ✨ Features
 
@@ -21,7 +25,7 @@ A Chrome extension that intercepts Bitcoin transactions displayed on **Chainalys
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/rstlgu/btc-fingerprint-companion.git
+   git clone https://github.com/rstlgu/refinger.git
    ```
 
 2. Open your browser and navigate to:
@@ -102,7 +106,7 @@ For each transaction hash:
 ## 📁 Project Structure
 
 ```
-chainalysis-wallet-fingerprint/
+refinger/
 ├── manifest.json      # Extension config (Manifest V3)
 ├── background.js      # Service worker (intercept & analyze)
 ├── content.js         # Injected page script
